@@ -6,16 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".AppActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="65dp"
         android:layout_alignParentStart="true"
-        android:orientation="horizontal"
-        android:paddingStart="15dp"
-        android:paddingTop="10dp">
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp">
 
         <ImageView
+            android:id="@+id/iconLeft"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -23,14 +25,27 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_gravity="center"
+            android:layout_toRightOf="@+id/iconLeft"
+            android:gravity="center_vertical"
             android:text="Dice Roller"
 
             android:textColor="@color/button_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
-    </LinearLayout>
+
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:padding="1dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="3dp"
+            android:onClick="about_Clicked"
+            android:src="@drawable/info" />
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/image"

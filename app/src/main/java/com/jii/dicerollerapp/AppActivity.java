@@ -3,6 +3,9 @@ package com.jii.dicerollerapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
@@ -15,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,9 +32,10 @@ public class AppActivity extends AppCompatActivity {
     TextView currentResult;
     LinearLayout container;
     Button btn;
+    Dialog dialog;
 
     Animation rotate;
-    String results[] = {"Try Again!","One", "Two", "Three", "Four", "Five", "Six"};
+    String results[] = {"Try again!","One", "Two", "Three", "Four", "Five", "Six"};
 
     String lastResult, img;
     int rollNumber;
@@ -44,6 +49,8 @@ public class AppActivity extends AppCompatActivity {
         currentResult = findViewById(R.id.result_text);
         container = findViewById(R.id.prev_container);
         btn = findViewById(R.id.button);
+        dialog = new Dialog(this);
+
 
         container.removeView(findViewById(R.id.prev1));
         container.removeView(findViewById(R.id.prev2));
@@ -85,6 +92,8 @@ public class AppActivity extends AppCompatActivity {
     public void rollClicked(View view) {
         RxView.clicks(btn).throttleFirst(1300, TimeUnit.MILLISECONDS).subscribe(empty -> {
             // action on click
+            currentResult.setHint("Rolling...");
+            currentResult.setText("");
             diceImage.setImageResource(R.drawable.dice_6_template);
             diceImage.startAnimation(rotate);
             rollNumber = (int) (Math.random() * 6 + 1);
@@ -124,15 +133,11 @@ public class AppActivity extends AppCompatActivity {
 //                    Toast.makeText(this, "four", Toast.LENGTH_SHORT).show();
             }
 
-
-
-
-
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    // Do something after 5000ms
+                    // Do something after 600ms
                     int imageResource = getResources().getIdentifier(img, null, getPackageName());
                     diceImage.setImageResource(imageResource);
                     Toast.makeText(AppActivity.this, res, Toast.LENGTH_SHORT).show();
@@ -149,4 +154,19 @@ public class AppActivity extends AppCompatActivity {
         });
     }
 
+    public void about_Clicked(View view) {
+        dialog.setContentView(R.layout.about_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button okayBtn = dialog.findViewById(R.id.okayBtn);
+
+        okayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
 }
